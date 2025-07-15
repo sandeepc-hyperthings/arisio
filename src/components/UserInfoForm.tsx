@@ -439,7 +439,6 @@ export const UserInfoForm: React.FC<UserInfoFormProps> = ({
                   </div>
                 </div>
               </form>
-              </form>
             </div>
           </div>
 
