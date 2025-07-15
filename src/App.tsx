@@ -58,7 +58,7 @@ const App: React.FC = () => {
     await new Promise(resolve => setTimeout(resolve, 2000));
     
     // Generate purchased tickets
-    const tickets: PurchasedTicket[] = ticketHolders.map((holder, index) => {
+    const ticketPromises = ticketHolders.map((holder, index) => {
       const ticketType = ticketTypes.find(t => t.id === holder.ticketType);
       if (!ticketType) throw new Error('Invalid ticket type');
       
@@ -71,6 +71,8 @@ const App: React.FC = () => {
         venue: 'Virtual Event'
       });
     });
+    
+    const tickets: PurchasedTicket[] = await Promise.all(ticketPromises);
     
     setPurchasedTickets(tickets);
     setIsProcessing(false);
