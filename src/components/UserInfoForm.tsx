@@ -183,7 +183,7 @@ export const UserInfoForm: React.FC<UserInfoFormProps> = ({
                 {ticketHolders.map((holder, index) => {
                   const ticketType = ticketTypes.find(t => t.id === holder.ticketType);
                   return (
-                    <div key={holder.ticketId} className="border border-gray-200 rounded-lg p-6">
+                    <div key={holder.ticketId} className="border border-gray-200 rounded-lg p-4">
                       <div className="flex items-center justify-between mb-6">
                         <div className="flex items-center space-x-3">
                           <div className={`w-3 h-3 rounded-full bg-gradient-to-r ${ticketType?.color || 'from-blue-500 to-blue-600'}`}></div>
@@ -200,7 +200,7 @@ export const UserInfoForm: React.FC<UserInfoFormProps> = ({
                       </div>
 
                       {/* Personal Information */}
-                      <div className="mb-6">
+                      <div className="mb-4">
                         <h4 className="text-md font-medium text-gray-900 mb-4 flex items-center">
                           <User className="h-4 w-4 mr-2 text-blue-600" />
                           Personal Information
@@ -268,7 +268,7 @@ export const UserInfoForm: React.FC<UserInfoFormProps> = ({
                       </div>
 
                       {/* Contact Information */}
-                      <div className="mb-6">
+                      <div className="mb-4">
                         <h4 className="text-md font-medium text-gray-900 mb-4 flex items-center">
                           <Mail className="h-4 w-4 mr-2 text-blue-600" />
                           Contact Information
