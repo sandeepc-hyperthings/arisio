@@ -520,6 +520,7 @@ export const UserInfoForm: React.FC<UserInfoFormProps> = ({
               </button>
               </div>
 
+              <p className="text-xs text-gray-500 text-center mt-4">
                 Secure payment processing with 256-bit SSL encryption
               </p>
             </div>
