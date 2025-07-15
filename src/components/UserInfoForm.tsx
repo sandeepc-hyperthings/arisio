@@ -272,6 +272,7 @@ export const UserInfoForm: React.FC<UserInfoFormProps> = ({
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-8">
+              <form id="user-info-form" onSubmit={handleSubmit} className="space-y-8">
                 {/* Ticket Distribution Error */}
                 {errors['ticketDistribution'] && (
                   <div className="bg-red-50 border border-red-200 rounded-lg p-4">
@@ -557,7 +558,6 @@ export const UserInfoForm: React.FC<UserInfoFormProps> = ({
                 
                 <button
                   type="submit"
-                  form="user-info-form"
                   onClick={handleSubmit}
                   disabled={isProcessing}
                   className={`w-full py-3 px-4 rounded-lg font-medium transition-all transform ${
