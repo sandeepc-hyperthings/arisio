@@ -272,7 +272,6 @@ export const UserInfoForm: React.FC<UserInfoFormProps> = ({
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-8">
-              <form id="user-info-form" onSubmit={handleSubmit} className="space-y-8">
                 {/* Ticket Distribution Error */}
                 {errors['ticketDistribution'] && (
                   <div className="bg-red-50 border border-red-200 rounded-lg p-4">
@@ -494,60 +493,6 @@ export const UserInfoForm: React.FC<UserInfoFormProps> = ({
                 )}
               </div>
 
-              {/* Coupon Code Section */}
-              <div className="border-t border-gray-200 pt-4 mb-6">
-                <h3 className="font-medium text-gray-900 mb-3">Coupon Code</h3>
-                {!isCouponApplied ? (
-                  <div className="space-y-2">
-                    <div className="flex space-x-2">
-                      <input
-                        type="text"
-                        value={couponCode}
-                        onChange={(e) => setCouponCode(e.target.value)}
-                        placeholder="Enter coupon code"
-                        className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
-                      />
-                      <button
-                        type="button"
-                        onClick={applyCoupon}
-                        disabled={!couponCode.trim()}
-                        className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                          couponCode.trim()
-                            ? 'bg-blue-600 text-white hover:bg-blue-700'
-                            : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                        }`}
-                      >
-                        Apply
-                      </button>
-                    </div>
-                    {couponError && (
-                      <p className="text-sm text-red-600">{couponError}</p>
-                    )}
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-between bg-green-50 border border-green-200 rounded-lg p-3">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                      <span className="text-sm font-medium text-green-800">
-                        {couponCode.toUpperCase()} applied
-                      </span>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={removeCoupon}
-                      className="text-sm text-green-700 hover:text-green-800 underline"
-                    >
-                      Remove
-                    </button>
-                  </div>
-                )}
-                   form="user-info-form"
-                  <p className="text-xs text-gray-500">
-                    Try: SAVE10, SAVE20, EARLY50, or STUDENT
-                  </p>
-                </div>
-              </div>
-
               {/* Action Buttons */}
               <div className="space-y-3">
                 <button
@@ -559,7 +504,7 @@ export const UserInfoForm: React.FC<UserInfoFormProps> = ({
                 
                 <button
                   type="submit"
-                  onClick={handleSubmit}
+                  form="user-info-form"
                   disabled={isProcessing}
                   className={`w-full py-3 px-4 rounded-lg font-medium transition-all transform ${
                     isProcessing
@@ -576,7 +521,6 @@ export const UserInfoForm: React.FC<UserInfoFormProps> = ({
               </button>
               </div>
 
-              <p className="text-xs text-gray-500 text-center mt-4">
                 Secure payment processing with 256-bit SSL encryption
               </p>
             </div>
