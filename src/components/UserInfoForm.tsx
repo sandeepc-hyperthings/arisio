@@ -33,6 +33,11 @@ export const UserInfoForm: React.FC<UserInfoFormProps> = ({
   totalPrice,
   isProcessing 
 }) => {
+  const [couponCode, setCouponCode] = useState('');
+  const [couponDiscount, setCouponDiscount] = useState(0);
+  const [couponError, setCouponError] = useState('');
+  const [isCouponApplied, setIsCouponApplied] = useState(false);
+
   const [ticketHolders, setTicketHolders] = useState<TicketHolder[]>(() => {
     const holders: TicketHolder[] = [];
     
@@ -56,6 +61,45 @@ export const UserInfoForm: React.FC<UserInfoFormProps> = ({
 
   const [errors, setErrors] = useState<{[key: string]: string}>({});
   const [showEventForm, setShowEventForm] = useState(false);
+
+  const applyCoupon = () => {
+    setCouponError('');
+    
+    // Mock coupon validation - in real app, this would be an API call
+    const validCoupons = {
+      'SAVE10': { discount: 0.10, type: 'percentage' },
+      'SAVE20': { discount: 0.20, type: 'percentage' },
+      'EARLY50': { discount: 50, type: 'fixed' },
+      'STUDENT': { discount: 0.15, type: 'percentage' }
+    };
+
+    const coupon = validCoupons[couponCode.toUpperCase() as keyof typeof validCoupons];
+    
+    if (coupon) {
+      let discount = 0;
+      if (coupon.type === 'percentage') {
+        discount = totalPrice * coupon.discount;
+      } else {
+        discount = Math.min(coupon.discount, totalPrice);
+      }
+      
+      setCouponDiscount(discount);
+      setIsCouponApplied(true);
+    } else {
+      setCouponError('Invalid coupon code');
+      setCouponDiscount(0);
+      setIsCouponApplied(false);
+    }
+  };
+
+  const removeCoupon = () => {
+    setCouponCode('');
+    setCouponDiscount(0);
+    setCouponError('');
+    setIsCouponApplied(false);
+  };
+
+  const finalPrice = totalPrice - couponDiscount;
 
   const validateForm = () => {
     const newErrors: {[key: string]: string} = {};
@@ -433,8 +477,72 @@ export const UserInfoForm: React.FC<UserInfoFormProps> = ({
                 <div className="border-t border-gray-200 pt-4">
                   <div className="flex justify-between font-semibold text-lg">
                     <span>Total Amount</span>
-                    <span className="text-blue-600">${totalPrice.toLocaleString()}</span>
+                    <span className="text-blue-600">${finalPrice.toLocaleString()}</span>
                   </div>
+                </div>
+                
+                {/* Coupon Discount */}
+                {couponDiscount > 0 && (
+                  <div className="border-t border-gray-200 pt-2">
+                    <div className="flex justify-between text-sm text-green-600">
+                      <span>Coupon Discount</span>
+                      <span>-${couponDiscount.toLocaleString()}</span>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Coupon Code Section */}
+              <div className="border-t border-gray-200 pt-4 mb-6">
+                <h3 className="font-medium text-gray-900 mb-3">Coupon Code</h3>
+                {!isCouponApplied ? (
+                  <div className="space-y-2">
+                    <div className="flex space-x-2">
+                      <input
+                        type="text"
+                        value={couponCode}
+                        onChange={(e) => setCouponCode(e.target.value)}
+                        placeholder="Enter coupon code"
+                        className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                      />
+                      <button
+                        type="button"
+                        onClick={applyCoupon}
+                        disabled={!couponCode.trim()}
+                        className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                          couponCode.trim()
+                            ? 'bg-blue-600 text-white hover:bg-blue-700'
+                            : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                        }`}
+                      >
+                        Apply
+                      </button>
+                    </div>
+                    {couponError && (
+                      <p className="text-sm text-red-600">{couponError}</p>
+                    )}
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-between bg-green-50 border border-green-200 rounded-lg p-3">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                      <span className="text-sm font-medium text-green-800">
+                        {couponCode.toUpperCase()} applied
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={removeCoupon}
+                      className="text-sm text-green-700 hover:text-green-800 underline"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                )}
+                <div className="mt-2">
+                  <p className="text-xs text-gray-500">
+                    Try: SAVE10, SAVE20, EARLY50, or STUDENT
+                  </p>
                 </div>
               </div>
 
@@ -461,7 +569,7 @@ export const UserInfoForm: React.FC<UserInfoFormProps> = ({
                 <div className="flex items-center justify-center space-x-2">
                   <CreditCard className="h-5 w-5" />
                   <span>
-                    {isProcessing ? 'Processing...' : `Complete Purchase - $${totalPrice.toLocaleString()}`}
+                    {isProcessing ? 'Processing...' : `Complete Purchase - $${finalPrice.toLocaleString()}`}
                   </span>
                 </div>
               </button>
