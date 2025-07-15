@@ -11,7 +11,7 @@ import {
   Check
 } from 'lucide-react';
 import { TicketType } from '../types';
-import { EventCreationForm } from './EventCreationForm';
+import { EventCreationForm } from './components/EventCreationForm';
 
 interface EventPageProps {
   onProceedToUserInfo: (tickets: {[key: string]: number}) => void;
@@ -46,7 +46,7 @@ const ticketTypes: TicketType[] = [
   }
 ];
 
-export const EventPage: React.FC<EventPageProps> = ({ onProceedToUserInfo }) => {
+const EventPage: React.FC<EventPageProps> = ({ onProceedToUserInfo }) => {
   const [tickets, setTickets] = useState<{[key: string]: number}>({
     attendee: 0,
     speaker: 0
@@ -325,3 +325,5 @@ export const EventPage: React.FC<EventPageProps> = ({ onProceedToUserInfo }) => 
     </div>
   );
 };
+
+export default EventPage;
