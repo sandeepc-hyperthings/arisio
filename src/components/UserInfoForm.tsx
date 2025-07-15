@@ -268,7 +268,7 @@ export const UserInfoForm: React.FC<UserInfoFormProps> = ({
                       </div>
 
                       {/* Contact Information */}
-                      <div className="mb-4">
+                      <div className="mb-2">
                         <h4 className="text-md font-medium text-gray-900 mb-4 flex items-center">
                           <Mail className="h-4 w-4 mr-2 text-blue-600" />
                           Contact Information
