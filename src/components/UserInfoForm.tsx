@@ -278,6 +278,7 @@ export const UserInfoForm: React.FC<UserInfoFormProps> = ({
                   <div className="bg-red-50 border border-red-200 rounded-lg p-4">
                     <p className="text-sm text-red-600">{errors['ticketDistribution']}</p>
                   </div>
+                   type="button"
                 )}
 
                 {ticketHolders.map((holder, index) => {
@@ -541,7 +542,7 @@ export const UserInfoForm: React.FC<UserInfoFormProps> = ({
                     </button>
                   </div>
                 )}
-                <div className="mt-2">
+                   form="user-info-form"
                   <p className="text-xs text-gray-500">
                     Try: SAVE10, SAVE20, EARLY50, or STUDENT
                   </p>
