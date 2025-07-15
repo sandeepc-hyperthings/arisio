@@ -35,29 +35,21 @@ export const UserInfoForm: React.FC<UserInfoFormProps> = ({
 }) => {
   const [ticketHolders, setTicketHolders] = useState<TicketHolder[]>(() => {
     const holders: TicketHolder[] = [];
-    let ticketIndex = 0;
     
-    Object.entries(selectedTickets).forEach(([ticketTypeId, quantity]) => {
-      if (quantity > 0) {
-        const ticketType = ticketTypes.find(t => t.id === ticketTypeId);
-        if (ticketType) {
-          for (let i = 0; i < quantity; i++) {
-            holders.push({
-              ticketId: `${ticketTypeId}-${i + 1}`,
-              ticketType: ticketTypeId,
-              ticketName: ticketType.name,
-              firstName: '',
-              lastName: '',
-              email: '',
-              phone: '',
-              company: '',
-              jobTitle: ''
-            });
-            ticketIndex++;
-          }
-        }
-      }
-    });
+    // Create holders for each ticket without pre-assigning types
+    for (let i = 0; i < totalTickets; i++) {
+      holders.push({
+        ticketId: `ticket-${i + 1}`,
+        ticketType: '', // Will be selected by user
+        ticketName: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        company: '',
+        jobTitle: ''
+      });
+    }
     
     return holders;
   });
@@ -69,6 +61,10 @@ export const UserInfoForm: React.FC<UserInfoFormProps> = ({
     const newErrors: {[key: string]: string} = {};
 
     ticketHolders.forEach((holder, index) => {
+      if (!holder.ticketType) {
+        newErrors[`${index}-ticketType`] = 'Please select a ticket type';
+      }
+
       if (!holder.firstName.trim()) {
         newErrors[`${index}-firstName`] = 'First name is required';
       }
@@ -87,6 +83,22 @@ export const UserInfoForm: React.FC<UserInfoFormProps> = ({
         newErrors[`${index}-phone`] = 'Phone number is required';
       } else if (!/^[\+]?[1-9][\d]{0,15}$/.test(holder.phone.replace(/[\s\-\(\)]/g, ''))) {
         newErrors[`${index}-phone`] = 'Please enter a valid phone number';
+      }
+    });
+
+    // Validate ticket type distribution
+    const assignedTickets: {[key: string]: number} = {};
+    ticketHolders.forEach(holder => {
+      if (holder.ticketType) {
+        assignedTickets[holder.ticketType] = (assignedTickets[holder.ticketType] || 0) + 1;
+      }
+    });
+
+    // Check if assigned tickets match selected quantities
+    Object.entries(selectedTickets).forEach(([ticketTypeId, quantity]) => {
+      const assigned = assignedTickets[ticketTypeId] || 0;
+      if (assigned !== quantity) {
+        newErrors['ticketDistribution'] = `Please assign exactly ${quantity} ${ticketTypes.find(t => t.id === ticketTypeId)?.name} ticket(s)`;
       }
     });
 
@@ -112,6 +124,42 @@ export const UserInfoForm: React.FC<UserInfoFormProps> = ({
     }
   };
 
+  const handleTicketTypeChange = (index: number, ticketTypeId: string) => {
+    const ticketType = ticketTypes.find(t => t.id === ticketTypeId);
+    setTicketHolders(prev => prev.map((holder, i) => 
+      i === index ? { 
+        ...holder, 
+        ticketType: ticketTypeId,
+        ticketName: ticketType?.name || ''
+      } : holder
+    ));
+    
+    // Clear related errors
+    if (errors[`${index}-ticketType`]) {
+      setErrors(prev => ({ ...prev, [`${index}-ticketType`]: '' }));
+    }
+    if (errors['ticketDistribution']) {
+      setErrors(prev => ({ ...prev, ticketDistribution: '' }));
+    }
+  };
+
+  const getAvailableTicketTypes = (currentIndex: number) => {
+    const assignedCounts: {[key: string]: number} = {};
+    
+    // Count currently assigned tickets (excluding current holder)
+    ticketHolders.forEach((holder, index) => {
+      if (index !== currentIndex && holder.ticketType) {
+        assignedCounts[holder.ticketType] = (assignedCounts[holder.ticketType] || 0) + 1;
+      }
+    });
+    
+    // Return ticket types that still have available slots
+    return ticketTypes.filter(ticketType => {
+      const maxQuantity = selectedTickets[ticketType.id] || 0;
+      const currentlyAssigned = assignedCounts[ticketType.id] || 0;
+      return currentlyAssigned < maxQuantity;
+    });
+  };
   const copyToAll = (sourceIndex: number, field: keyof UserInfo) => {
     const sourceValue = ticketHolders[sourceIndex][field];
     setTicketHolders(prev => prev.map(holder => ({ ...holder, [field]: sourceValue })));
@@ -180,15 +228,24 @@ export const UserInfoForm: React.FC<UserInfoFormProps> = ({
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-8">
+                {/* Ticket Distribution Error */}
+                {errors['ticketDistribution'] && (
+                  <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                    <p className="text-sm text-red-600">{errors['ticketDistribution']}</p>
+                  </div>
+                )}
+
                 {ticketHolders.map((holder, index) => {
-                  const ticketType = ticketTypes.find(t => t.id === holder.ticketType);
+                  const currentTicketType = ticketTypes.find(t => t.id === holder.ticketType);
+                  const availableTypes = getAvailableTicketTypes(index);
+                  
                   return (
                     <div key={holder.ticketId} className="border border-gray-200 rounded-lg p-4">
                       <div className="flex items-center justify-between mb-6">
                         <div className="flex items-center space-x-3">
-                          <div className={`w-3 h-3 rounded-full bg-gradient-to-r ${ticketType?.color || 'from-blue-500 to-blue-600'}`}></div>
+                          <div className={`w-3 h-3 rounded-full bg-gradient-to-r ${currentTicketType?.color || 'from-gray-400 to-gray-500'}`}></div>
                           <h3 className="text-lg font-semibold text-gray-900">
-                            {holder.ticketName} - Ticket #{index + 1}
+                            {holder.ticketName || 'Unassigned'} - Attendee #{index + 1}
                           </h3>
                         </div>
                         {index === 0 && totalTickets > 1 && (
@@ -196,6 +253,36 @@ export const UserInfoForm: React.FC<UserInfoFormProps> = ({
                             <Users className="h-4 w-4" />
                             <span>Primary ticket holder</span>
                           </div>
+                        )}
+                      </div>
+
+                      {/* Ticket Type Selection */}
+                      <div className="mb-4">
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Ticket Type *
+                        </label>
+                        <select
+                          value={holder.ticketType}
+                          onChange={(e) => handleTicketTypeChange(index, e.target.value)}
+                          className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
+                            errors[`${index}-ticketType`] ? 'border-red-500' : 'border-gray-300'
+                          }`}
+                        >
+                          <option value="">Select ticket type</option>
+                          {availableTypes.map(ticketType => (
+                            <option key={ticketType.id} value={ticketType.id}>
+                              {ticketType.name} - ${ticketType.price}
+                            </option>
+                          ))}
+                          {/* Show current selection even if no longer available */}
+                          {holder.ticketType && !availableTypes.find(t => t.id === holder.ticketType) && (
+                            <option value={holder.ticketType}>
+                              {currentTicketType?.name} - ${currentTicketType?.price} (Selected)
+                            </option>
+                          )}
+                        </select>
+                        {errors[`${index}-ticketType`] && (
+                          <p className="mt-1 text-sm text-red-600">{errors[`${index}-ticketType`]}</p>
                         )}
                       </div>
 
