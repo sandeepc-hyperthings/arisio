@@ -294,15 +294,6 @@ export const UserInfoForm: React.FC<UserInfoFormProps> = ({
                               <label className="block text-sm font-medium text-gray-700">
                                 First Name *
                               </label>
-                              {index > 0 && (
-                                <button
-                                  type="button"
-                                  onClick={() => copyToAll(0, 'firstName')}
-                                  className="text-xs text-blue-600 hover:text-blue-700"
-                                >
-                                  Copy from first
-                                </button>
-                              )}
                             </div>
                             <input
                               type="text"
@@ -323,15 +314,6 @@ export const UserInfoForm: React.FC<UserInfoFormProps> = ({
                               <label className="block text-sm font-medium text-gray-700">
                                 Last Name *
                               </label>
-                              {index > 0 && (
-                                <button
-                                  type="button"
-                                  onClick={() => copyToAll(0, 'lastName')}
-                                  className="text-xs text-blue-600 hover:text-blue-700"
-                                >
-                                  Copy from first
-                                </button>
-                              )}
                             </div>
                             <input
                               type="text"
@@ -358,15 +340,6 @@ export const UserInfoForm: React.FC<UserInfoFormProps> = ({
                               <label className="block text-sm font-medium text-gray-700">
                                 Email Address *
                               </label>
-                              {index > 0 && (
-                                <button
-                                  type="button"
-                                  onClick={() => copyToAll(0, 'email')}
-                                  className="text-xs text-blue-600 hover:text-blue-700"
-                                >
-                                  Copy from first
-                                </button>
-                              )}
                             </div>
                             <input
                               type="email"
@@ -387,15 +360,6 @@ export const UserInfoForm: React.FC<UserInfoFormProps> = ({
                               <label className="block text-sm font-medium text-gray-700">
                                 Phone Number *
                               </label>
-                              {index > 0 && (
-                                <button
-                                  type="button"
-                                  onClick={() => copyToAll(0, 'phone')}
-                                  className="text-xs text-blue-600 hover:text-blue-700"
-                                >
-                                  Copy from first
-                                </button>
-                              )}
                             </div>
                             <input
                               type="tel"
@@ -414,58 +378,6 @@ export const UserInfoForm: React.FC<UserInfoFormProps> = ({
                         </div>
                       </div>
 
-                      {/* Professional Information */}
-                      <div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div>
-                            <div className="flex items-center justify-between mb-2">
-                              <label className="block text-sm font-medium text-gray-700">
-                                Company
-                              </label>
-                              {index > 0 && (
-                                <button
-                                  type="button"
-                                  onClick={() => copyToAll(0, 'company')}
-                                  className="text-xs text-blue-600 hover:text-blue-700"
-                                >
-                                  Copy from first
-                                </button>
-                              )}
-                            </div>
-                            <input
-                              type="text"
-                              value={holder.company}
-                              onChange={(e) => handleInputChange(index, 'company', e.target.value)}
-                              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                              placeholder="Enter company name"
-                            />
-                          </div>
-
-                          <div>
-                            <div className="flex items-center justify-between mb-2">
-                              <label className="block text-sm font-medium text-gray-700">
-                                Job Title
-                              </label>
-                              {index > 0 && (
-                                <button
-                                  type="button"
-                                  onClick={() => copyToAll(0, 'jobTitle')}
-                                  className="text-xs text-blue-600 hover:text-blue-700"
-                                >
-                                  Copy from first
-                                </button>
-                              )}
-                            </div>
-                            <input
-                              type="text"
-                              value={holder.jobTitle}
-                              onChange={(e) => handleInputChange(index, 'jobTitle', e.target.value)}
-                              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                              placeholder="Enter job title"
-                            />
-                          </div>
-                        </div>
-                      </div>
                     </div>
                   );
                 })}
