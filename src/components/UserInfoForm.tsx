@@ -268,13 +268,14 @@ export const UserInfoForm: React.FC<UserInfoFormProps> = ({
                       </div>
 
                       {/* Contact Information */}
-                      <div className="mb-2">
+                      <div className="mb-2 grid grid-cols-1 md:grid-cols-2 gap-4">
                         <h4 className="text-md font-medium text-gray-900 mb-4 flex items-center">
                           <Mail className="h-4 w-4 mr-2 text-blue-600" />
                           Contact Information
                         </h4>
                         
-                        <div className="space-y-4">
+                        <div className="md:col-span-2">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div>
                             <div className="flex items-center justify-between mb-2">
                               <label className="block text-sm font-medium text-gray-700">
@@ -331,6 +332,7 @@ export const UserInfoForm: React.FC<UserInfoFormProps> = ({
                             {errors[`${index}-phone`] && (
                               <p className="mt-1 text-sm text-red-600">{errors[`${index}-phone`]}</p>
                             )}
+                          </div>
                           </div>
                         </div>
                       </div>
