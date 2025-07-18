@@ -50,3 +50,4 @@ export interface Coupon {
   applicableTicketTypes: string[]; // ticket type IDs
   minimumPurchase?: number;
   createdAt: string;
+}
