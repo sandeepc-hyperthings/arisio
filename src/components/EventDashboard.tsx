@@ -308,16 +308,15 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ onBack }) => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Back Button */}
-        <button 
-          onClick={onBack}
-          className="flex items-center text-gray-600 hover:text-gray-900 mb-8 transition-colors"
-        >
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to Events
-        </button>
-
-        {/* Analytics Toggle Button */}
-        <div className="mb-8">
+        {/* Back Button and Analytics Toggle */}
+        <div className="flex items-center justify-between mb-8">
+          <button 
+            onClick={onBack}
+            className="flex items-center text-gray-600 hover:text-gray-900 transition-colors"
+          >
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Events
+          </button>
           <button
             onClick={() => setShowAnalytics(!showAnalytics)}
             className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all transform hover:scale-105 shadow-lg"
