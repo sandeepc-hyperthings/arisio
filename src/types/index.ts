@@ -34,3 +34,19 @@ export interface PurchasedTicket {
   purchaseDate: string;
   qrCode: string;
 }
+
+export interface Coupon {
+  id: string;
+  code: string;
+  name: string;
+  description: string;
+  discountType: 'percentage' | 'fixed';
+  discountValue: number;
+  maxUses: number;
+  currentUses: number;
+  validFrom: string;
+  validUntil: string;
+  isActive: boolean;
+  applicableTicketTypes: string[]; // ticket type IDs
+  minimumPurchase?: number;
+  createdAt: string;

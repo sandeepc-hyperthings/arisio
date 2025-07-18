@@ -19,9 +19,11 @@ import {
   Building,
   Plus,
   Filter,
-  Search
+  Search,
+  Tag
 } from 'lucide-react';
 import { EventCreationForm } from './EventCreationForm';
+import { CouponManagement } from './CouponManagement';
 
 interface EventDashboardProps {
   onBack: () => void;
@@ -52,6 +54,7 @@ interface SalesData {
 export const EventDashboard: React.FC<EventDashboardProps> = ({ onBack }) => {
   const [activeTab, setActiveTab] = useState<'overview' | 'sales' | 'attendees'>('overview');
   const [showEventForm, setShowEventForm] = useState(false);
+  const [showCouponManagement, setShowCouponManagement] = useState(false);
   const [showAnalytics, setShowAnalytics] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState<'all' | 'confirmed' | 'pending' | 'cancelled'>('all');
@@ -341,6 +344,13 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ onBack }) => {
               >
                 <Edit className="h-4 w-4" />
                 <span>Edit Event</span>
+              </button>
+              <button
+                onClick={() => setShowCouponManagement(true)}
+                className="bg-white bg-opacity-90 hover:bg-opacity-100 text-gray-700 px-4 py-2 rounded-lg transition-all flex items-center space-x-2 ml-2"
+              >
+                <Tag className="h-4 w-4" />
+                <span>Manage Coupons</span>
               </button>
             </div>
           </div>
@@ -759,6 +769,15 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ onBack }) => {
         <EventCreationForm 
           onClose={() => setShowEventForm(false)}
           onSave={handleSaveEvent}
+        />
+      )}
+
+      {/* Coupon Management Modal */}
+      {showCouponManagement && (
+        <CouponManagement
+          onClose={() => setShowCouponManagement(false)}
+          eventId={eventData.id}
+          ticketTypes={eventData.ticketTypes}
         />
       )}
     </div>
