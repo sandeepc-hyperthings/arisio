@@ -330,7 +330,8 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ onBack }) => {
         </div>
 
         {/* Event Header */}
-        <div className="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
+        {!showAnalytics && (
+          <div className="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
           <div className="relative">
             <img 
               src={eventData.imageUrl} 
@@ -412,6 +413,7 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ onBack }) => {
             </div>
           </div>
         </div>
+        )}
 
         {/* Analytics Section - Only show when toggled */}
         {showAnalytics && (
