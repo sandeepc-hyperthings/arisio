@@ -130,6 +130,114 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ onBack }) => {
       purchaseDate: '2025-01-02T09:45:00Z',
       price: 299,
       status: 'pending'
+    },
+    {
+      id: '4',
+      ticketNumber: 'TKT-004',
+      ticketType: 'Attendee',
+      holderName: 'Emily Rodriguez',
+      holderEmail: 'emily@greentech.io',
+      holderPhone: '+1-555-0126',
+      company: 'GreenTech Solutions',
+      purchaseDate: '2025-01-02T16:20:00Z',
+      price: 299,
+      status: 'confirmed'
+    },
+    {
+      id: '5',
+      ticketNumber: 'TKT-005',
+      ticketType: 'Speaker',
+      holderName: 'David Park',
+      holderEmail: 'david@climatefund.org',
+      holderPhone: '+1-555-0127',
+      company: 'Climate Investment Fund',
+      purchaseDate: '2025-01-03T11:10:00Z',
+      price: 199,
+      status: 'confirmed'
+    },
+    {
+      id: '6',
+      ticketNumber: 'TKT-006',
+      ticketType: 'Attendee',
+      holderName: 'Lisa Wang',
+      holderEmail: 'lisa@energyventures.com',
+      holderPhone: '+1-555-0128',
+      company: 'Energy Ventures LLC',
+      purchaseDate: '2025-01-03T14:30:00Z',
+      price: 299,
+      status: 'confirmed'
+    },
+    {
+      id: '7',
+      ticketNumber: 'TKT-007',
+      ticketType: 'Attendee',
+      holderName: 'Robert Thompson',
+      holderEmail: 'robert@sustainablecap.com',
+      holderPhone: '+1-555-0129',
+      company: 'Sustainable Capital Partners',
+      purchaseDate: '2025-01-04T08:45:00Z',
+      price: 299,
+      status: 'confirmed'
+    },
+    {
+      id: '8',
+      ticketNumber: 'TKT-008',
+      ticketType: 'Speaker',
+      holderName: 'Maria Garcia',
+      holderEmail: 'maria@cleanenergy.net',
+      holderPhone: '+1-555-0130',
+      company: 'Clean Energy Innovations',
+      purchaseDate: '2025-01-04T13:15:00Z',
+      price: 199,
+      status: 'confirmed'
+    },
+    {
+      id: '9',
+      ticketNumber: 'TKT-009',
+      ticketType: 'Attendee',
+      holderName: 'James Wilson',
+      holderEmail: 'james@impactinvest.com',
+      holderPhone: '+1-555-0131',
+      company: 'Impact Investment Group',
+      purchaseDate: '2025-01-05T10:20:00Z',
+      price: 299,
+      status: 'pending'
+    },
+    {
+      id: '10',
+      ticketNumber: 'TKT-010',
+      ticketType: 'Attendee',
+      holderName: 'Anna Kowalski',
+      holderEmail: 'anna@carbonfund.eu',
+      holderPhone: '+48-555-0132',
+      company: 'European Carbon Fund',
+      purchaseDate: '2025-01-05T15:40:00Z',
+      price: 299,
+      status: 'confirmed'
+    },
+    {
+      id: '11',
+      ticketNumber: 'TKT-011',
+      ticketType: 'Speaker',
+      holderName: 'Ahmed Hassan',
+      holderEmail: 'ahmed@renewabletech.ae',
+      holderPhone: '+971-555-0133',
+      company: 'Renewable Tech MENA',
+      purchaseDate: '2025-01-06T09:30:00Z',
+      price: 199,
+      status: 'confirmed'
+    },
+    {
+      id: '12',
+      ticketNumber: 'TKT-012',
+      ticketType: 'Attendee',
+      holderName: 'Sophie Laurent',
+      holderEmail: 'sophie@greenfund.fr',
+      holderPhone: '+33-555-0134',
+      company: 'Green Investment Fund',
+      purchaseDate: '2025-01-06T12:50:00Z',
+      price: 299,
+      status: 'confirmed'
     }
   ];
 
