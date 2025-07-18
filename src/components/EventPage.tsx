@@ -8,7 +8,8 @@ import {
   Minus, 
   CreditCard,
   Copy,
-  Check
+  Check,
+  BarChart3
 } from 'lucide-react';
 import { TicketType } from '../types';
 import { EventCreationForm } from './EventCreationForm';
