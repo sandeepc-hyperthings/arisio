@@ -316,6 +316,17 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ onBack }) => {
           Back to Events
         </button>
 
+        {/* Analytics Toggle Button */}
+        <div className="mb-8">
+          <button
+            onClick={() => setShowAnalytics(!showAnalytics)}
+            className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all transform hover:scale-105 shadow-lg"
+          >
+            <BarChart3 className="h-5 w-5" />
+            <span>{showAnalytics ? 'Hide Analytics' : 'View Analytics & Reports'}</span>
+          </button>
+        </div>
+
         {/* Event Header */}
         <div className="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
           <div className="relative">
@@ -391,17 +402,6 @@ export const EventDashboard: React.FC<EventDashboardProps> = ({ onBack }) => {
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Analytics Toggle Button */}
-        <div className="mb-8">
-          <button
-            onClick={() => setShowAnalytics(!showAnalytics)}
-            className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all transform hover:scale-105 shadow-lg"
-          >
-            <BarChart3 className="h-5 w-5" />
-            <span>{showAnalytics ? 'Hide Analytics' : 'View Analytics & Reports'}</span>
-          </button>
         </div>
 
         {/* Analytics Section - Only show when toggled */}
