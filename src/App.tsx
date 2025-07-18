@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { EventPage } from './components/EventPage';
 import { UserInfoForm } from './components/UserInfoForm';
 import { TicketConfirmation } from './components/TicketConfirmation';
+import { EventDashboard } from './components/EventDashboard';
 import { TicketType, TicketHolder, PurchasedTicket } from './types';
 import { generateTicket } from './utils/ticketGenerator';
 
-type AppView = 'event' | 'userInfo' | 'confirmation';
+type AppView = 'event' | 'userInfo' | 'confirmation' | 'dashboard';
 
 const ticketTypes: TicketType[] = [
   {
@@ -85,6 +86,14 @@ const App: React.FC = () => {
     setPurchasedTickets([]);
   };
 
+  const handleViewDashboard = () => {
+    setCurrentView('dashboard');
+  };
+
+  const handleBackFromDashboard = () => {
+    setCurrentView('event');
+  };
+
   const getTotalTickets = () => {
     return Object.values(selectedTickets).reduce((sum, count) => sum + count, 0);
   };
@@ -118,8 +127,19 @@ const App: React.FC = () => {
     );
   }
 
+  if (currentView === 'dashboard') {
+    return (
+      <EventDashboard
+        onBack={handleBackFromDashboard}
+      />
+    );
+  }
+
   return (
-    <EventPage onProceedToUserInfo={handleProceedToUserInfo} />
+    <EventPage 
+      onProceedToUserInfo={handleProceedToUserInfo}
+      onViewDashboard={handleViewDashboard}
+    />
   );
 };
 

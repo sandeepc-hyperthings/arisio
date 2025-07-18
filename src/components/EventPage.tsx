@@ -15,6 +15,7 @@ import { EventCreationForm } from './EventCreationForm';
 
 interface EventPageProps {
   onProceedToUserInfo: (tickets: {[key: string]: number}) => void;
+  onViewDashboard: () => void;
 }
 
 const ticketTypes: TicketType[] = [
@@ -46,7 +47,7 @@ const ticketTypes: TicketType[] = [
   }
 ];
 
-export const EventPage: React.FC<EventPageProps> = ({ onProceedToUserInfo }) => {
+export const EventPage: React.FC<EventPageProps> = ({ onProceedToUserInfo, onViewDashboard }) => {
   const [tickets, setTickets] = useState<{[key: string]: number}>({
     attendee: 0,
     speaker: 0
@@ -111,6 +112,13 @@ export const EventPage: React.FC<EventPageProps> = ({ onProceedToUserInfo }) => 
               >
                 <Plus className="h-4 w-4" />
                 <span>Add Event</span>
+              </button>
+              <button 
+                onClick={onViewDashboard}
+                className="bg-gradient-to-r from-green-600 to-green-700 text-white px-6 py-2 rounded-lg hover:from-green-700 hover:to-green-800 transition-all transform hover:scale-105 flex items-center space-x-2"
+              >
+                <BarChart3 className="h-4 w-4" />
+                <span>Dashboard</span>
               </button>
               <button className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-6 py-2 rounded-lg hover:from-orange-600 hover:to-orange-700 transition-all transform hover:scale-105">
                 Sign Up / Log In
